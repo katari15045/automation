@@ -10,6 +10,8 @@ class Main:
 	api_key = "AIzaSyA8mzVl3pFTu_d-ak5Gtp1WjGn9hV13cPg"
 	playlist_id = "PLfRGVFjiprOwnKFo_38f6-_exN5gZMGof" # punjabi
 	#playlist_id = "PLfRGVFjiprOzs2awqwuO5KeagE36Ub0FG" # english
+	#playlist_id = "PLfRGVFjiprOx5YGS6ou970YRxdNMeout-" # Hindi
+	#playlist_id = "PLfRGVFjiprOw2YCPmjWboqyp-se2eVnlQ" # Telugu
 	max_results = "50"
 
 	@staticmethod
@@ -31,9 +33,13 @@ class Main:
 				params_y_api = {'format':'bestaudio', 'outtmpl': video_title + '.%(ext)s'}
 				with YoutubeDL(params_y_api) as ydl:
 					print("Song " + str(song_num) + " ...")
-					ydl.download([url_video])
-				song_num = song_num+1
-				ind = ind+1
+					song_num = song_num+1
+					ind = ind+1		
+					try:
+						ydl.download([url_video])
+					except:
+						print("can't download Song ", song_num)
+						continue
 			next_page_token = response.get("nextPageToken")
 			if(next_page_token != None):
 				params_g_api["pageToken"] = next_page_token
